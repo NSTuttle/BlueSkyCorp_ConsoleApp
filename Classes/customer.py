@@ -4,15 +4,51 @@ class CustomerRewards:
         self.currentCycleDollars = currentCycleDollars
         self.totalDollarsSpent = totalDollarsSpent
 
+    def resetCycle(self):
+        self.hasDiscount = True
+        self.currentCycleDollars = 0
+
+    def useDiscount(self):
+        self.hasDiscount = False
+
+    def incrementCycleDollars(self, amt):
+        self.currentCycleDollars = self.currentCycleDollars + int(amt)
+
+    def incrementTotalDollars(self, amt):
+        self.totalDollarsSpent = self.totalDollarsSpent + int(amt)
+
+    def getCycleDollars(self):
+        return self.currentCycleDollars
+
+    def getTotalDollars(self):
+        return self.totalDollarsSpent
+
+    def hasDiscount(self):
+        return self.hasDiscount
+
+    def totalMinusDiscount(self, amount):
+        return int(amount) * .90
+
+    def totalDiscount(self, amount):
+        return int(amount) * .10
+
 
 class Customer:
-    def __init__(self, firstName, lastName, email, phone, rewards=CustomerRewards(), inMarketingCamp=False):
+    def __init__(self, firstName, lastName, email, rewards=CustomerRewards()):
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
-        self.phone = phone
+        self.transactions = []
         self.rewards = rewards
-        self.inMarketingCamp = inMarketingCamp
 
-    def joinCampaign(self):
-        self.inMarketingCamp = True
+    def get_fullname(self):
+        return f'{self.firstName} {self.lastName}'
+
+    def addTransaction(self, transaction):
+        self.transactions.append(transaction)
+
+    def transactionCount(self):
+        return len(self.transactions)
+
+    def getTransactions(self):
+        return self.transactions
